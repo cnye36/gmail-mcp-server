@@ -33,9 +33,9 @@ USER gmail-mcp
 # Expose port
 EXPOSE 8080
 
-# Health check
+# Health check using Node.js instead of curl
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD curl -f http://localhost:8080/mcp || exit 1
+  CMD node -e "require('http').get('http://localhost:8080/mcp', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) }).on('error', () => process.exit(1))"
 
 # Start the server
 CMD ["node", "dist/index.js"] 

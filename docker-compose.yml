@@ -22,12 +22,6 @@ services:
       - "traefik.http.routers.gmail-mcp.entrypoints=websecure"
       - "traefik.http.routers.gmail-mcp.tls.certresolver=letsencrypt"
       - "traefik.http.services.gmail-mcp.loadbalancer.server.port=8080"
-    healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/mcp"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
 
 networks:
   mcp-network:
